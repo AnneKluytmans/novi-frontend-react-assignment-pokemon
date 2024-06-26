@@ -4,6 +4,7 @@ import ErrorMessage from "./components/errorMessage/ErrorMessage.jsx";
 import logo from "./assets/logo.png";
 import "./App.css";
 import {useEffect, useState} from "react";
+import PokemonCard from "./components/pokemonCard/PokemonCard.jsx";
 
 
 function App() {
@@ -36,33 +37,37 @@ function App() {
 
 
     return (
-      <div className="poke-deck">
+      <div className="pokemon-container">
           <img src={logo} alt="pokemon logo" className="pokemon-logo"/>
 
           {pokemon.results.length > 0 ?
-              <div>
-                  <Button
-                      type="button"
-                      disabled={pokemon.previous === null}
-                      clickHandler={() => setEndpoint(pokemon.previous)}
-                      className="nav-button"
+              <>
+                  <div className="button-bar">
+                      <Button
+                          type="button"
+                          disabled={pokemon.previous === null}
+                          clickHandler={() => setEndpoint(pokemon.previous)}
+                          className="nav-button"
+                          >
+                          Previous
+                      </Button>
+                      <Button
+                          type="button"
+                          disabled={pokemon.next === null}
+                          clickHandler={() => setEndpoint(pokemon.next)}
+                          className="nav-button"
                       >
-                      Previous
-                  </Button>
-                  <Button
-                      type="button"
-                      disabled={pokemon.next === null}
-                      clickHandler={() => setEndpoint(pokemon.next)}
-                      className="nav-button"
-                  >
-                      Next
-                  </Button>
+                          Next
+                      </Button>
+                  </div>
+                  <div className="poke-deck">
                   {pokemon.results.map((poke) => {
                       return (
-                          <h2 key={poke.name}>{poke.name}</h2>
+                          <PokemonCard key={poke.name} endpoint={poke.url} />
                       );
                   })}
-              </div> : null }
+                  </div>
+              </> : null }
           {loading && <h2>Loading...</h2>}
           {error && <ErrorMessage message="There was an issue fetching the data...🌩"/>}
       </div>

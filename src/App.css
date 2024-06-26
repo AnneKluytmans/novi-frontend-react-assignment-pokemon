@@ -9,6 +9,13 @@ body {
     align-items: center;
 }
 
+.pokemon-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .poke-deck {
     text-align: center;
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
@@ -17,6 +24,10 @@ body {
     max-width: 1000px;
     padding: 36px;
     margin: 20px;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
 .pokemon-logo {

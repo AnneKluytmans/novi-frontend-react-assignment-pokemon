@@ -1,4 +1,4 @@
-.pokemon-card {
+.poke-card {
     font-weight: 300;
     background-color: #f0f0f0;
     border-radius: 8px;
@@ -15,11 +15,11 @@
     align-items: center;
 }
 
-.pokemon-card:hover {
+.poke-card:hover {
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-.pokemon-card ul {
+.poke-card ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -31,9 +31,9 @@
     flex-wrap: wrap;
 }
 
-.pokemon-card ul li {
+.poke-card ul li {
     text-align: center;
-    background-color: #ededed;
+    background-color: #d4d4d4;
     border-radius: 4px;
 
     padding: 4px;
