@@ -1,0 +1,6 @@
+.error-message {
+    color: crimson;
+    text-align: center;
+    padding: 20px;
+    max-width: 600px;
+}
