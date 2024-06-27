@@ -9,18 +9,24 @@ const PokemonCard = ({ endpoint }) => {
     const [error, toggleError] = useState(false);
 
     useEffect(() => {
+        const controller = new AbortController();
+        const signal = controller.signal;
 
         async function getPoke() {
             toggleError(false);
             toggleLoading(true);
 
             try {
-                const response = await axios.get(endpoint);
+                const response = await axios.get(endpoint, {signal});
                 console.log(response.data);
                 setPoke(response.data);
             } catch (e) {
-                console.error(e);
-                toggleError(true);
+                if (axios.isCancel(e)) {
+                    console.log('The request is canceled');
+                } else {
+                    console.error(e);
+                    toggleError(true);
+                }
             } finally {
                 toggleLoading(false);
             }
@@ -30,6 +36,11 @@ const PokemonCard = ({ endpoint }) => {
             getPoke();
         }
 
+        return function cleanup() {
+            console.log('Unmount effect is triggered. Aborting request...');
+            controller.abort();
+        };
+
     }, []);
 
     return (
@@ -38,7 +49,7 @@ const PokemonCard = ({ endpoint }) => {
                 <>
                     <h2>{poke.name}</h2>
                     <img
-                        alt="Afbeelding pokémon"
+                        alt="frontal image of the pokemon"
                         src={poke.sprites.front_default}
                     />
                     <p><strong>Moves: </strong>{poke.moves.length}</p>

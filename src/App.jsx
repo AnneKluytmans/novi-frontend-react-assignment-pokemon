@@ -14,18 +14,24 @@ function App() {
     const [error, toggleError] = useState(false);
 
     useEffect(() => {
+        const controller = new AbortController();
+        const signal = controller.signal;
 
         async function getPokemon() {
             toggleError(false);
             toggleLoading(true);
 
             try {
-                const response = await axios.get(endpoint);
+                const response = await axios.get(endpoint, {signal});
                 console.log(response.data);
                 setPokemon(response.data);
             } catch (e) {
-                console.error(e);
-                toggleError(true);
+                if (axios.isCancel(e)) {
+                    console.log('The request is canceled');
+                } else {
+                    console.error(e);
+                    toggleError(true);
+                }
             } finally {
                 toggleLoading(false);
             }
@@ -33,6 +39,10 @@ function App() {
 
         getPokemon();
 
+        return function cleanup() {
+            console.log('Unmount effect is triggered. Aborting request...');
+            controller.abort();
+        };
     }, [endpoint]);
 
 
