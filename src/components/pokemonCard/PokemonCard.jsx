@@ -4,7 +4,7 @@ import axios from "axios";
 import ErrorMessage from "../errorMessage/ErrorMessage.jsx";
 
 const PokemonCard = ({ endpoint }) => {
-    const [poke, setPoke] = useState({});
+    const [poke, setPoke] = useState(undefined);
     const [loading, toggleLoading] = useState(false);
     const [error, toggleError] = useState(false);
 
@@ -45,7 +45,7 @@ const PokemonCard = ({ endpoint }) => {
 
     return (
         <article className="poke-card">
-            {Object.keys(poke).length > 0 ?
+            {poke > 0 ?
                 <>
                     <h2>{poke.name}</h2>
                     <img
